@@ -1,0 +1,42 @@
+{
+	"name": "contributte/firewall",
+	"description": "Security package",
+	"type": "library",
+	"license": "MIT",
+	"homepage": "https://github.com/contributte/firewall",
+	"require": {
+		"php": "^7.4.0",
+		"contributte/di": "^0.5.1",
+		"nette/di": "^3.0.7",
+		"nette/http": "^3.1.1",
+		"nette/security": "^3.1.0",
+		"latte/latte": "^2.10",
+		"tracy/tracy": "^2.8"
+	},
+	"require-dev": {
+		"ninjify/nunjuck": "^0.4",
+		"ninjify/qa": "^0.12",
+		"phpstan/phpstan": "^0.12.0",
+		"phpstan/phpstan-nette": "^0.12",
+		"phpstan/phpstan-strict-rules": "^0.12",
+		"phpstan/phpstan-deprecation-rules": "^0.12",
+		"consistence/coding-standard": "^3.10"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"autoload": {
+		"psr-4": {
+			"Contributte\\Firewall\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Contributte\\Firewall\\Tests\\": "tests"
+		}
+	},
+	"scripts": {
+		"coding-style": "phpcs --standard=coding_style_ruleset.xml --extensions=php --encoding=utf-8 --cache=.phpcs-cache --colors -sp src",
+		"phpstan": "phpstan analyse -l max -c phpstan.neon",
+		"tests": "tester -s -p php --colors 1 -C tests/Cases"
+	}
+}
