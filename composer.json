@@ -19,8 +19,7 @@
 		"phpstan/phpstan": "^0.12.0",
 		"phpstan/phpstan-nette": "^0.12",
 		"phpstan/phpstan-strict-rules": "^0.12",
-		"phpstan/phpstan-deprecation-rules": "^0.12",
-		"consistence/coding-standard": "^3.10"
+		"phpstan/phpstan-deprecation-rules": "^0.12"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
