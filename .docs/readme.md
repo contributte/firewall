@@ -61,7 +61,11 @@ Then firewall will use `sleepIdentity` and `wakeupIdentiy` functions instead of 
 
 Tracy Panel
 ----
-To disable default Tracy panel for Nette security add this lines to `config.neon`
+Library include own Tracy panel to show information about currently used Firewall and stored identity.
+
+![](tracy_bar.png)
+
+To disable default Tracy panel for Nette/Security add this lines to `config.neon`
 ```neon
 security:
 	debugger: false
