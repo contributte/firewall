@@ -1,19 +1,20 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Firewall\Tests\Cases\DI;
+namespace Tests\Cases\DI;
 
 use Contributte\Firewall\Authentication\Firewall;
 use Contributte\Firewall\DI\FirewallExtension;
-use Contributte\Firewall\Tests\Helpers\GeneralHelper;
-use Contributte\Firewall\Tests\Helpers\TestFirewall;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;
 use Tester\Assert;
+use Tester\TestCase;
+use Tests\Toolkit\Helpers\GeneralHelper;
+use Tests\Toolkit\Helpers\TestFirewall;
 
-require __DIR__. '/../../bootstrap.php';
+require __DIR__ . '/../../bootstrap.php';
 
-class FirewallExtensionTest extends \Tester\TestCase
+class FirewallExtensionTest extends TestCase
 {
 
 	public function testDefault(): void
@@ -25,8 +26,8 @@ class FirewallExtensionTest extends \Tester\TestCase
 				firewall:
 					namespaces:
 						test:
-							firewall: Contributte\Firewall\Tests\Helpers\TestFirewall
-							storage: Contributte\Firewall\Tests\Helpers\TestStorage
+							firewall: Tests\Toolkit\Helpers\TestFirewall
+							storage: Tests\Toolkit\Helpers\TestStorage
 			'));
 			$compiler->addDependencies([__FILE__]);
 		}, __METHOD__);
@@ -36,6 +37,7 @@ class FirewallExtensionTest extends \Tester\TestCase
 
 		Assert::type(TestFirewall::class, $container->getByType(Firewall::class));
 	}
+
 }
 
 (new FirewallExtensionTest())->run();

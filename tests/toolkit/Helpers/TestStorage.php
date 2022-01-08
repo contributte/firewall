@@ -1,17 +1,17 @@
-<?php
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
-namespace Contributte\Firewall\Tests\Helpers;
+namespace Tests\Toolkit\Helpers;
 
+use Contributte\Firewall\Authentication\UserStorage;
 use Nette\Security\IIdentity;
 
-class TestStorage implements \Contributte\Firewall\Authentication\UserStorage
+class TestStorage implements UserStorage
 {
 
 	/**
 	 * @inheritDoc
 	 */
-	function saveAuthentication(IIdentity $identity): void
+	public function saveAuthentication(IIdentity $identity): void
 	{
 		// TODO: Implement saveAuthentication() method.
 	}
@@ -19,7 +19,7 @@ class TestStorage implements \Contributte\Firewall\Authentication\UserStorage
 	/**
 	 * @inheritDoc
 	 */
-	function clearAuthentication(bool $clearIdentity): void
+	public function clearAuthentication(bool $clearIdentity): void
 	{
 		// TODO: Implement clearAuthentication() method.
 	}
@@ -27,7 +27,7 @@ class TestStorage implements \Contributte\Firewall\Authentication\UserStorage
 	/**
 	 * @inheritDoc
 	 */
-	function getState(): array
+	public function getState(): array
 	{
 		// TODO: Implement getState() method.
 	}
@@ -35,7 +35,7 @@ class TestStorage implements \Contributte\Firewall\Authentication\UserStorage
 	/**
 	 * @inheritDoc
 	 */
-	function setExpiration(?string $expire, bool $clearIdentity): void
+	public function setExpiration(?string $expire, bool $clearIdentity): void
 	{
 		// TODO: Implement setExpiration() method.
 	}

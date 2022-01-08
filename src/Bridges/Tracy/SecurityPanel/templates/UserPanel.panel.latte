@@ -1,14 +1,14 @@
 {templateType Contributte\Firewall\Bridges\Tracy\SecurityPanel\SecurityPanelTemplate}
 <div class="nette-UserPanel">
-    {foreach $firewalls as $firewall}
-        {skipIf $firewall->getIdentity() === null}
-        <h1>{= substr(get_class($firewall), strrpos(get_class($firewall), '\\') + 1)}</h1>
-        {if $firewall->getIdentity() !== null}
-            {Tracy\Dumper::toHtml($firewall->getIdentity(), [Tracy\Dumper::LIVE => true])|noescape}
-        {else}
-            <p>no identity</p>
-        {/if}
-    {else}
-        <h1>Unlogged</h1>
-    {/foreach}
+	{foreach $firewalls as $firewall}
+		{skipIf $firewall->getIdentity() === null}
+		<h1>{= substr(get_class($firewall), strrpos(get_class($firewall), '\\') + 1)}</h1>
+		{if $firewall->getIdentity() !== null}
+			{Tracy\Dumper::toHtml($firewall->getIdentity(), [Tracy\Dumper::LIVE => true])|noescape}
+		{else}
+			<p>no identity</p>
+		{/if}
+	{else}
+		<h1>Unlogged</h1>
+	{/foreach}
 </div>

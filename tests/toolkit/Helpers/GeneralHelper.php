@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Contributte\Firewall\Tests\Helpers;
+namespace Tests\Toolkit\Helpers;
 
 use Nette\DI\Config\Adapters\NeonAdapter;
 use Nette\Neon\Neon;
@@ -12,4 +12,5 @@ class GeneralHelper
 	{
 		return (new NeonAdapter())->process((array) Neon::decode($str));
 	}
+
 }

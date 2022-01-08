@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<ruleset name="Livechat">
-    <rule ref="vendor/ninjify/coding-standard/contributte.xml"/>
-
-</ruleset>

@@ -8,6 +8,7 @@ class PermissionAuthorizator implements Authorizator
 {
 
 	public const AUTHENTICATED_ROLE = '__authenticated';
+
 	public const GUEST_ROLE = '__guest';
 
 	private Firewall $firewall;
