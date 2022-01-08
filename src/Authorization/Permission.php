@@ -23,7 +23,7 @@ class Permission extends BasePermission
 	 * @param string|array|null $roles
 	 * @param string|array|null $resources
 	 * @param string|array|null $privileges
-	 * @param callable|null $assertion
+	 * @param callable|null     $assertion
 	 * @return static
 	 */
 	public function allow($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, $assertion = null): self
@@ -44,7 +44,7 @@ class Permission extends BasePermission
 	 * @param string|array|null $roles
 	 * @param string|array|null $resources
 	 * @param string|array|null $privileges
-	 * @param callable|null $assertion
+	 * @param callable|null     $assertion
 	 * @return static
 	 */
 	public function deny($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, $assertion = null): self
