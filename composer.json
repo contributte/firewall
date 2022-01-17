@@ -1,6 +1,6 @@
 {
 	"name": "contributte/firewall",
-	"description": "Security package",
+	"description": "Multi module Authentication and Authorization for Nette Framework",
 	"type": "library",
 	"license": "MIT",
 	"homepage": "https://github.com/contributte/firewall",
@@ -21,8 +21,6 @@
 		"phpstan/phpstan-strict-rules": "^1.0",
 		"phpstan/phpstan-deprecation-rules": "^1.0"
 	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"Contributte\\Firewall\\": "src"
@@ -34,9 +32,14 @@
 			"Tests\\Toolkit\\": "tests/toolkit"
 		}
 	},
-	"scripts": {
-		"coding-style": "phpcs --standard=coding_style_ruleset.xml --extensions=php --encoding=utf-8 --cache=.phpcs-cache --colors -sp src",
-		"phpstan": "phpstan analyse -l max -c phpstan.neon",
-		"tests": "tester -s -p php --colors 1 -C tests/Cases"
-	}
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.2.x-dev"
+    }
+  }
 }
