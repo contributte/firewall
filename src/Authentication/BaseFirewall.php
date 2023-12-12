@@ -9,10 +9,10 @@ use Nette\Utils\Arrays;
 abstract class BaseFirewall implements Firewall
 {
 
-	/** @var callable[]  function (IIdentity $identity): void; Occurs when the user is successfully logged in */
+	/** @var callable[] function (IIdentity $identity): void; Occurs when the user is successfully logged in */
 	public array $onLoggedIn = [];
 
-	/** @var callable[]  function (IIdentity $identity): void; Occurs when the user is logged out */
+	/** @var callable[] function (IIdentity $identity): void; Occurs when the user is logged out */
 	public array $onLoggedOut = [];
 
 	private UserStorage $storage;
@@ -91,6 +91,7 @@ abstract class BaseFirewall implements Firewall
 	{
 		/** @var int|null $reason */
 		$reason = $this->storage->getState()[2];
+
 		return $reason;
 	}
 

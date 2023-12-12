@@ -3,17 +3,18 @@
 namespace Contributte\Firewall\Bridges\Http;
 
 use Contributte\Firewall\Authentication\UserStorage;
+use Nette\Bridges\SecurityHttp\SessionStorage as NetteSessionStorage;
 use Nette\Http\Session;
 use Nette\Security\IIdentity;
 
 class SessionStorage implements UserStorage
 {
 
-	private \Nette\Bridges\SecurityHttp\SessionStorage $storage;
+	private NetteSessionStorage $storage;
 
 	public function __construct(Session $session)
 	{
-		$this->storage = new \Nette\Bridges\SecurityHttp\SessionStorage($session);
+		$this->storage = new NetteSessionStorage($session);
 	}
 
 	public function saveAuthentication(IIdentity $identity): void
@@ -26,6 +27,9 @@ class SessionStorage implements UserStorage
 		$this->storage->clearAuthentication($clearIdentity);
 	}
 
+	/**
+	 * @return array{bool, IIdentity|null, int|null}
+	 */
 	public function getState(): array
 	{
 		return $this->storage->getState();

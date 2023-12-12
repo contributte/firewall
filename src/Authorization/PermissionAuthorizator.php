@@ -3,6 +3,7 @@
 namespace Contributte\Firewall\Authorization;
 
 use Contributte\Firewall\Authentication\Firewall;
+use Nette\Security\Resource;
 
 class PermissionAuthorizator implements Authorizator
 {
@@ -23,7 +24,7 @@ class PermissionAuthorizator implements Authorizator
 		$this->permission->addRole(self::GUEST_ROLE);
 	}
 
-	public function isAllowed($resource, string $privilege): bool
+	public function isAllowed(Resource|string $resource, string $privilege): bool
 	{
 		$identity = $this->firewall->getIdentity();
 		$this->permission->setIdentity($identity);

@@ -2,17 +2,18 @@
 
 namespace Contributte\Firewall\DI;
 
-use Contributte\DI\Helper\ExtensionDefinitionsHelper;
 use Contributte\Firewall\Bridges\Http\SessionStorage;
 use Contributte\Firewall\Bridges\Tracy\SecurityPanel\SecurityPanel;
 use Nette\DI\CompilerExtension;
-use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
 use Nette\PhpGenerator\ClassType;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
-use Nette\Utils\ArrayHash;
+use stdClass;
 
+/**
+ * @method stdClass getConfig()
+ */
 class FirewallExtension extends CompilerExtension
 {
 
@@ -38,56 +39,57 @@ class FirewallExtension extends CompilerExtension
 	public function beforeCompile(): void
 	{
 		$builder = $this->getContainerBuilder();
-		$defHelper = new ExtensionDefinitionsHelper($this->compiler);
-		/** @var ArrayHash $config */
-		$config = $this->config;
+		$config = $this->getConfig();
+
 		$firewalls = [];
 		foreach ($config->namespaces as $namespace => $securityConfig) {
 			if (is_string($securityConfig)) {
-				/** @var ServiceDefinition $firewall */
-				$firewall = $defHelper->getDefinitionFromConfig($securityConfig, $this->prefix($namespace . '.firewall'));
-				/** @var ServiceDefinition $storage */
-				$storage = $defHelper->getDefinitionFromConfig($config->storage, $namespace . '.storage');
-				$storage->addSetup('setNamespace', ['namespace' => $namespace]);
-				$storage->setAutowired(false);
-				$firewall->setArgument('storage', $storage);
+				$firewall = $builder->addDefinition($this->prefix($namespace . '.firewall'))
+					->setFactory($securityConfig)
+					->setArgument('storage', $this->prefix('@' . $namespace . '.storage'));
+
+				$builder->addDefinition($this->prefix($namespace . '.storage'))
+					->setFactory($config->storage)
+					->addSetup('setNamespace', ['namespace' => $namespace])
+					->setAutowired(false);
+
 				$firewalls[] = $firewall;
-				continue;
 			}
 
-			/** @var ServiceDefinition $firewall */
-			$firewall = $defHelper->getDefinitionFromConfig($securityConfig->firewall, $this->prefix($namespace . '.firewall'));
-			/** @var ServiceDefinition $storage */
-			$storage = $securityConfig->storage
-				? $defHelper->getDefinitionFromConfig($securityConfig->storage, $namespace . '.storage')
-				: $defHelper->getDefinitionFromConfig($config->storage, $namespace . '.storage');
-			$storage->addSetup('setNamespace', ['namespace' => $namespace]);
-			$storage->setAutowired(false);
-			$firewall->setArgument('storage', $storage);
+			if (!is_string($securityConfig)) {
+				$firewall = $builder->addDefinition($this->prefix($namespace . '.firewall'))
+					->setFactory($securityConfig->firewall)
+					->setArgument('storage', $this->prefix('@' . $namespace . '.storage'));
 
-			if (isset($securityConfig->validator)) {
-				$firewall->setArgument('identityValidator', $defHelper->getDefinitionFromConfig($securityConfig->validator, $namespace . '.validator'));
+				if (isset($securityConfig->validator)) {
+					$firewall->setArgument('identityValidator', $securityConfig->validator);
+				}
+
+				$builder->addDefinition($this->prefix($namespace . '.storage'))
+					->setFactory($securityConfig->storage ?? $config->storage)
+					->addSetup('setNamespace', ['namespace' => $namespace])
+					->setAutowired(false);
+
+				if (isset($securityConfig->authorizator)) {
+					$builder->addDefinition($this->prefix($namespace . '.authorizatorFactory'))
+						->setFactory($securityConfig->authorizator, ['firewall' => $firewall]);
+				}
+
+				$firewalls[] = $firewall;
 			}
-
-			if (isset($securityConfig->authorizator)) {
-				$builder->addDefinition($this->prefix($namespace . '.authorizatorFactory'))
-					->setFactory($securityConfig->authorizator, ['firewall' => $firewall]);
-			}
-
-			$firewalls[] = $firewall;
 		}
 
 		if ($config->panel) {
 			$builder->addDefinition($this->prefix('panel'))
-				->setFactory(SecurityPanel::class, $firewalls)
+				->setFactory(SecurityPanel::class, [$firewalls])
 				->setAutowired(false);
 		}
 	}
 
 	public function afterCompile(ClassType $class): void
 	{
-		/** @var ArrayHash $config */
-		$config = $this->config;
+		$config = $this->getConfig();
+
 		if ($config->panel) {
 			$initialize = $class->getMethod('initialize');
 			$initialize->addBody(

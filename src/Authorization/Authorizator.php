@@ -7,9 +7,6 @@ use Nette\Security\Resource;
 interface Authorizator
 {
 
-	/**
-	 * @param Resource|string $resource
-	 */
-	public function isAllowed($resource, string $privilege): bool;
+	public function isAllowed(Resource|string $resource, string $privilege): bool;
 
 }

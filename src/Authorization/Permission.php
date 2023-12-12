@@ -8,8 +8,7 @@ use Nette\Security\Permission as BasePermission;
 class Permission extends BasePermission
 {
 
-	/** @var IIdentity|null */
-	private $identity;
+	private ?IIdentity $identity = null;
 
 	public function setIdentity(?IIdentity $identity = null): void
 	{
@@ -20,16 +19,13 @@ class Permission extends BasePermission
 	 * Allows one or more Roles access to [certain $privileges upon] the specified Resource(s).
 	 * If $assertion is provided, then it must return TRUE in order for rule to apply.
 	 *
-	 * @param string|array|null $roles
-	 * @param string|array|null $resources
-	 * @param string|array|null $privileges
-	 * @param callable|null     $assertion
 	 * @return static
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 	 */
-	public function allow($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, $assertion = null): self
+	public function allow($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, ?callable $assertion = null): self
 	{
 		if ($assertion !== null) {
-			$assertion = fn() => $assertion($this->identity, $this->getQueriedResource(), $this->getQueriedRole());
+			$assertion = fn () => $assertion($this->identity, $this->getQueriedResource(), $this->getQueriedRole());
 		}
 
 		parent::allow($roles, $resources, $privileges, $assertion);
@@ -41,16 +37,13 @@ class Permission extends BasePermission
 	 * Denies one or more Roles access to [certain $privileges upon] the specified Resource(s).
 	 * If $assertion is provided, then it must return TRUE in order for rule to apply.
 	 *
-	 * @param string|array|null $roles
-	 * @param string|array|null $resources
-	 * @param string|array|null $privileges
-	 * @param callable|null     $assertion
 	 * @return static
+	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 	 */
-	public function deny($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, $assertion = null): self
+	public function deny($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, ?callable $assertion = null): self
 	{
 		if ($assertion !== null) {
-			$assertion = fn() => $assertion($this->identity, $this->getQueriedResource(), $this->getQueriedRole());
+			$assertion = fn () => $assertion($this->identity, $this->getQueriedResource(), $this->getQueriedRole());
 		}
 
 		parent::deny($roles, $resources, $privileges, $assertion);
