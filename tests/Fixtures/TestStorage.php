@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\Toolkit\Helpers;
+namespace Tests\Fixtures;
 
 use Contributte\Firewall\Authentication\UserStorage;
 use Nette\Security\IIdentity;
