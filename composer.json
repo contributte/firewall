@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"homepage": "https://github.com/contributte/firewall",
 	"require": {
-		"php": ">=7.4.0",
+		"php": ">=8.1",
 		"contributte/di": "^0.5.1",
 		"nette/di": "^3.0.7",
 		"nette/http": "^3.1.1",
