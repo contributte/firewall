@@ -19,39 +19,39 @@ namespace App\Security;
 class AdminFirewall extends \Contributte\Firewall\Authentication\BaseFirewall{
 
 	public function authenticate(string $login, string $password):void{
-            // check credentials
-            $this->login(new \Nette\Security\SimpleIdentity('User ID'));    	
+    // check credentials
+    $this->login(new \Nette\Security\SimpleIdentity('User ID'));
 	}
 }
 ```
 
 ```neon
-extensions: 
+extensions:
 	firewall: Contributte\Firewall\DI\FirewallExtension
-	
+
 firewall:
 	namespaces:
 		admin: App\Security\AdminFirewall
-		web: App\Security\WebFirewall 
+		web: App\Security\WebFirewall
 ```
 
 With this basic configuration all Firewalls are using `Contributte\Firewall\Bridges\SessionStorage`.
 This storage is just bridge for `\Nette\Bridges\SecurityHttp\SessionStorage`.
 
 You can create your own storage, but it must implement `Contributte\Firewall\Authentication\UserStorage`.
-Then you can use it as default storage for all firewalls or just for one. 
+Then you can use it as default storage for all firewalls or just for one.
 
 ```neon
 firewall:
 	namespaces:
 		storage: App\Security\CustomSecurityStorage # change of default storage
-		admin: 
+		admin:
 			firewall: App\Security\AdminFirewall
 			storage: App\Security\CustomAdminStorage # change storage for this firewall
 		web:
 			firewall: App\Security\WebFirewall
 			validator: App\Security\IdentityValidator
-			authorizator: App\Security\Authorizator 
+			authorizator: App\Security\Authorizator
 ```
 
 Firewalls can use Identity Validators to update data in Identity.
