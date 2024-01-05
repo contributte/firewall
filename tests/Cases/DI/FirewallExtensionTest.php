@@ -1,8 +1,9 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Tests\Cases\DI;
 
 use Contributte\Firewall\Authentication\Firewall;
+use Contributte\Firewall\Bridges\Tracy\SecurityPanel\SecurityPanel;
 use Contributte\Firewall\DI\FirewallExtension;
 use Contributte\Tester\Utils\ContainerBuilder;
 use Contributte\Tester\Utils\Neonkit;
@@ -32,6 +33,7 @@ class FirewallExtensionTest extends TestCase
 			})->build();
 
 		Assert::type(TestFirewall::class, $container->getByType(Firewall::class));
+		Assert::type(SecurityPanel::class, $container->getByName('firewall.panel'));
 	}
 
 }

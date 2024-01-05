@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Contributte\Firewall\DI;
 
@@ -81,7 +81,7 @@ class FirewallExtension extends CompilerExtension
 
 		if ($config->panel) {
 			$builder->addDefinition($this->prefix('panel'))
-				->setFactory(SecurityPanel::class, [$firewalls])
+				->setFactory(SecurityPanel::class, ['firewalls' => $firewalls])
 				->setAutowired(false);
 		}
 	}
