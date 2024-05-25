@@ -16,11 +16,12 @@ declare(strict_types=1);
 
 namespace App\Security;
 
-class AdminFirewall extends \Contributte\Firewall\Authentication\BaseFirewall{
-
-	public function authenticate(string $login, string $password):void{
-    // check credentials
-    $this->login(new \Nette\Security\SimpleIdentity('User ID'));
+class AdminFirewall extends \Contributte\Firewall\Authentication\BaseFirewall
+{
+	public function authenticate(string $login, string $password): void
+	{
+		// check credentials
+		$this->login(new \Nette\Security\SimpleIdentity('User ID'));
 	}
 }
 ```
@@ -35,19 +36,19 @@ firewall:
 		web: App\Security\WebFirewall
 ```
 
-With this basic configuration all Firewalls are using `Contributte\Firewall\Bridges\SessionStorage`.
-This storage is just bridge for `\Nette\Bridges\SecurityHttp\SessionStorage`.
+Firewalls are using `Contributte\Firewall\Bridges\SessionStorage` by default.
+This storage is just a bridge for `\Nette\Bridges\SecurityHttp\SessionStorage`.
 
-You can create your own storage, but it must implement `Contributte\Firewall\Authentication\UserStorage`.
+You can create your own storage by implementing `Contributte\Firewall\Authentication\UserStorage`.
 Then you can use it as default storage for all firewalls or just for one.
 
 ```neon
 firewall:
+	storage: App\Security\CustomSecurityStorage # custom storage
 	namespaces:
-		storage: App\Security\CustomSecurityStorage # change of default storage
 		admin:
 			firewall: App\Security\AdminFirewall
-			storage: App\Security\CustomAdminStorage # change storage for this firewall
+			storage: App\Security\CustomAdminStorage # custom storage for AdminFirewall
 		web:
 			firewall: App\Security\WebFirewall
 			validator: App\Security\IdentityValidator
@@ -56,16 +57,16 @@ firewall:
 
 Firewalls can use Identity Validators to update data in Identity.
 
-You can achieve same funcionality if storage implements `\Nette\Security\IdentityHandler`.
-Then firewall will use `sleepIdentity` and `wakeupIdentiy` functions instead of IdentityValidator.
+You can achieve the same functionality if storage implements `\Nette\Security\IdentityHandler`.
+Firewall will then use `sleepIdentity` and `wakeupIdentiy` functions instead of IdentityValidator.
 
 Tracy Panel
 ----
-Library include own Tracy panel to show information about currently used Firewall and stored identity.
+The library includes its own Tracy panel to show information about currently used Firewall and stored identity.
 
 ![](tracy_bar.png)
 
-To disable default Tracy panel for Nette/Security add this lines to `config.neon`
+To disable the default Tracy panel for Nette/Security, add this lines to your `config.neon`.
 ```neon
 security:
 	debugger: false
