@@ -22,7 +22,7 @@ class Permission extends BasePermission
 	 * @return static
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 	 */
-	public function allow($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, ?callable $assertion = null): self
+	public function allow($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, ?callable $assertion = null): static
 	{
 		if ($assertion !== null) {
 			$assertion = fn () => $assertion($this->identity, $this->getQueriedResource(), $this->getQueriedRole());
@@ -40,7 +40,7 @@ class Permission extends BasePermission
 	 * @return static
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
 	 */
-	public function deny($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, ?callable $assertion = null): self
+	public function deny($roles = self::ALL, $resources = self::ALL, $privileges = self::ALL, ?callable $assertion = null): static
 	{
 		if ($assertion !== null) {
 			$assertion = fn () => $assertion($this->identity, $this->getQueriedResource(), $this->getQueriedRole());
