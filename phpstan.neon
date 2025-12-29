@@ -14,3 +14,7 @@ parameters:
 	paths:
 		- src
 		- .docs
+
+	ignoreErrors:
+		- '#Fetching deprecated class constant ALL#'
+		- '#has parameter \$\w+ with no type specified#'
