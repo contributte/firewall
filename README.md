@@ -33,8 +33,8 @@ For details on how to use this package, check out our [documentation](.docs).
 
 | State       | Version | Branch   | Nette | PHP     |
 |-------------|---------|----------|-------|---------|
-| dev         | `v0.3`  | `master` | 3.2+  | `>=8.1` |
-| stable      | `v0.2`  | `master` | 3.2+  | `>=8.1` |
+| dev         | `v0.4`  | `master` | 3.2+  | `>=8.2` |
+| stable      | `v0.3`  | `master` | 3.2+  | `>=8.2` |
 
 ## Development
 
